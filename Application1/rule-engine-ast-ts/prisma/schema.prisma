@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Node {
+  id        Int     @id @default(autoincrement())
+  type      String  // "operator" (AND/OR) or "operand"
+  value     String? // optional value for operands
+
+  // Self-referencing fields for the left and right child nodes
+  leftId    Int?    @unique // Reference to the left child (one-to-one relation)
+  rightId   Int?    @unique // Reference to the right child (one-to-one relation)
+
+  // Define relations for the left and right child nodes, with the inverse relation
+  left      Node?   @relation("LeftNode", fields: [leftId], references: [id])
+  right     Node?   @relation("RightNode", fields: [rightId], references: [id])
+
+  // Inverse relation fields
+  parentForLeft  Node? @relation("LeftNode")
+  parentForRight Node? @relation("RightNode")
+
+  // Adding relation for the Rule model (inverse relation for `ast` in `Rule`)
+  rule Rule? // Optional relation to the Rule model
+}
+
+model Rule {
+  id         Int     @id @default(autoincrement())
+  ruleString String  // Original rule string like "(age > 30 AND salary > 50000)"
+  astId      Int     @unique // Root AST node ID (one-to-one relation)
+  ast        Node    @relation(fields: [astId], references: [id]) // Node relation
+
+  // Adding reverse relation on the `Node` model
+}
