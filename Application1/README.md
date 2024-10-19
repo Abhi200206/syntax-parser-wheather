@@ -103,6 +103,8 @@ Make sure you have the following installed:
 
 ---
 
+
+
 ## Running the Application
 
 To run both the frontend and backend together:
@@ -119,3 +121,10 @@ To run both the frontend and backend together:
     Once both the frontend and backend servers are running, open your browser and visit `http://localhost:5173` (or the port specified by your frontend setup) to interact with the application.
 
 ---
+
+## videos of application running locally
+
+
+
+
+https://github.com/user-attachments/assets/337fff0d-9d45-40bd-84a7-84b28bfdc87a
