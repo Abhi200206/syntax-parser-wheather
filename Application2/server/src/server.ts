@@ -266,7 +266,7 @@ app.get('/api/weather/daily-summaries', async (req: Request, res: Response) => {
     try {
         const summaries = await prisma.dailySummary.findMany({
             orderBy: {
-                date: 'asc',
+                date: 'desc',
             },
         });
         const uniqueSummaries = Object.values(
